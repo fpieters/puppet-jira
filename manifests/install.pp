@@ -111,4 +111,18 @@ class jira::install {
       target => $jira::mysql_connector_jar,
     }
   }
+
+  class { 'java':
+  distribution => 'jre',
+}
+
+if $jira::db == 'postgresql' {
+  class { 'postgresql::server': }
+
+  postgresql::server::db { 'jira':
+  user     => 'jiraadm',
+  password => 'mypassword',
+  }
+}
+
 }
